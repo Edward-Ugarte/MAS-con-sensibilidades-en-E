@@ -1,0 +1,43 @@
+# =============================================
+# SENSIBILIDAD DEL TAMAÑO MUESTRAL SEGÚN E – Gretl 2025b
+# =============================================
+
+# === 1. Simular base de datos sintética ===
+nulldata 500
+series ingresos = normal(2000, 500)  # media ≈ 2000, σ ≈ 500
+
+# === 2. Definir constantes globales ===
+scalar Z = 1.96      # Confianza del 95%
+scalar media = mean(ingresos)
+scalar sigma = sd(ingresos)
+scalar sigma2 = sigma^2
+scalar N = $nobs
+
+# === 3. Imprimir encabezado de sensibilidad ===
+printf "\n📊 Sensibilidad del tamaño muestral frente al margen de error permitido (E)\n"
+printf "--------------------------------------------------------------------------\n"
+printf "  E     n_optimo    Margen      Límite inf   Límite sup\n"
+printf "--------------------------------------------------------------------------\n"
+
+# === 4. Bucle sobre distintos valores de E ===
+scalar E = 5
+loop while E <= 30
+    scalar n_A1 = (Z^2 * sigma2) / E^2
+    scalar n_A  = n_A1 / (1 + n_A1 / N)
+    scalar n_B  = (N * Z^2 * sigma2) / (N * E^2 + Z^2 * sigma2)
+    scalar n_C  = sigma2 / ((E / Z)^2 + (sigma2 / N))
+    scalar n    = ceil(max(n_A, max(n_B, n_C)))
+
+    scalar f       = n / N
+    scalar margen  = Z * sigma / sqrt(n) * sqrt(1 - f)
+    scalar inf     = media - margen
+    scalar sup     = media + margen
+
+    printf "%4.0f    %6.0f      %7.2f      %10.2f   %10.2f\n", E, n, margen, inf, sup
+
+    E = E + 5
+endloop
+
+printf "\n✅ Análisis completo – Sensibilidad de n según E (con corrección por población finita)\n"
+
+# Fin del script
