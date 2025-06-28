@@ -19,7 +19,7 @@ Se ha generado el escalar media = 1995.94
 Se ha generado el escalar sigma = 494.047
 ? scalar sigma2 = sigma^2
 Se ha generado el escalar sigma2 = 244083
-? scalar N = $nobs
+? scalar N = 
 Se ha generado el escalar N = 500
 # === 3. Imprimir encabezado de sensibilidad ===
 
@@ -27,20 +27,20 @@ Se ha generado el escalar N = 500
 --------------------------------------------------------------------------
   E     n_optimo    Margen      Límite inf   Límite sup
 --------------------------------------------------------------------------
-# === 4. Bucle sobre distintos valores de E ===
+# === 4. Bucle 
 ? scalar E = 5
 Se ha generado el escalar E = 5
 ? loop while E <= 30
-> scalar n_A1 = (Z^2 * sigma2) / E^2
-> scalar n_A  = n_A1 / (1 + n_A1 / N)
-> scalar n_B  = (N * Z^2 * sigma2) / (N * E^2 + Z^2 * sigma2)
-> scalar n_C  = sigma2 / ((E / Z)^2 + (sigma2 / N))
-> scalar n    = ceil(max(n_A, max(n_B, n_C)))
-> > scalar f       = n / N
-> scalar margen  = Z * sigma / sqrt(n) * sqrt(1 - f)
-> scalar inf     = media - margen
-> scalar sup     = media + margen
-> > > E = E + 5
+> scalar n_A1 =
+> scalar n_A  =
+> scalar n_B  = 
+> scalar n_C  = 
+> scalar n    = 
+> > scalar f       = 
+> scalar margen  = 
+> scalar inf     = 
+> scalar sup     = 
+> > > E = 
 > endloop
    5       494         4.77         1991.17      2000.71
   10       475         9.93         1986.01      2005.88
@@ -49,5 +49,3 @@ Se ha generado el escalar E = 5
   25       376        24.87         1971.07      2020.81
   30       338        29.98         1965.96      2025.92
 
-✅ Análisis completo – Sensibilidad de n según E (con corrección por población finita)
-# Fin del script
